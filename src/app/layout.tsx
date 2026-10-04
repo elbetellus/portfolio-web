@@ -58,10 +58,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#08111f" },
-    { media: "(prefers-color-scheme: light)", color: "#f6f3ec" },
-  ],
+  themeColor: "#08111f",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -69,11 +66,18 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${archivo.variable} ${plexSans.variable} ${plexMono.variable} antialiased`}
+      className={`dark ${archivo.variable} ${plexSans.variable} ${plexMono.variable} antialiased`}
       suppressHydrationWarning
     >
       <body className="flex min-h-dvh flex-col">
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
+        {/* Dark is the default for every visitor. A new storage key ignores theme choices saved by the old site. */}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem={false}
+          storageKey="ye-theme"
+          disableTransitionOnChange
+        >
           <MotionConfig reducedMotion="user">
             <BlueprintBackground />
             <SiteHeader />
