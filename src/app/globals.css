@@ -4,138 +4,532 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/*
+  Blueprint Data design tokens, three layers:
+  1. Primitives  raw values, theme independent
+  2. Semantic    purpose aliases, switched per theme (.dark is the default theme)
+  3. Component   per-component tokens that only reference the semantic layer
+*/
+
+/* ============================================================
+   LAYER 1: PRIMITIVES
+   ============================================================ */
+:root {
+  /* Ink: blueprint navy, used for the dark theme and for text on paper */
+  --ink-975: #050b16;
+  --ink-950: #08111f;
+  --ink-900: #0b1628;
+  --ink-850: #0e1b31;
+  --ink-800: #12223d;
+  --ink-750: #172a4a;
+  --ink-700: #1c3157;
+  --ink-600: #2a4572;
+  --ink-500: #3d5d93;
+  --ink-400: #6c86b4;
+  --ink-300: #93a4c3;
+  --ink-200: #c3d0e6;
+  --ink-100: #e7edf7;
+
+  /* Paper: drafting paper for the light theme */
+  --paper-0: #fdfcf9;
+  --paper-50: #f6f3ec;
+  --paper-100: #eee9df;
+  --paper-200: #e1dacb;
+  --paper-300: #cbc1ae;
+  --slate-700: #45536d;
+  --slate-900: #0d1a30;
+
+  /* Cyan: data lines and flows */
+  --cyan-300: #8be7f5;
+  --cyan-400: #4fd1e8;
+  --cyan-500: #1fb4cf;
+  --cyan-700: #0a6e83;
+  --cyan-800: #085a6b;
+
+  /* Amber: signal, call to action, highlights */
+  --amber-300: #ffd48a;
+  --amber-400: #f5b544;
+  --amber-500: #e59b1a;
+  --amber-700: #8f5404;
+  --amber-800: #6f4103;
+
+  /* Status */
+  --coral-400: #ff7a6b;
+  --coral-700: #b4321f;
+  --mint-400: #5fe3a6;
+  --mint-700: #0f6e44;
+
+  /* Radius */
+  --radius-xs: 4px;
+  --radius-s: 6px;
+  --radius-m: 10px;
+  --radius-l: 16px;
+
+  /* Motion: shared rhythm for CSS and framer-motion (see src/lib/motion.ts) */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-in: cubic-bezier(0.55, 0, 1, 0.45);
+  --dur-micro: 150ms;
+  --dur-short: 240ms;
+  --dur-medium: 400ms;
+  --dur-long: 700ms;
+  --dur-draw: 1400ms;
+
+  /* Grid module of the blueprint background */
+  --grid-minor-size: 24px;
+  --grid-major-size: 120px;
+}
+
+/* ============================================================
+   LAYER 2: SEMANTIC, light theme ("blueprint paper")
+   ============================================================ */
+:root {
+  --background: var(--paper-50);
+  --foreground: var(--slate-900);
+  --card: color-mix(in oklab, var(--paper-0) 82%, transparent);
+  --card-solid: var(--paper-0);
+  --card-foreground: var(--slate-900);
+  --popover: var(--paper-0);
+  --popover-foreground: var(--slate-900);
+  --primary: var(--amber-400);
+  --primary-foreground: var(--ink-950);
+  --secondary: var(--paper-100);
+  --secondary-foreground: var(--slate-900);
+  --muted: var(--paper-100);
+  --muted-foreground: var(--slate-700);
+  --accent: var(--paper-100);
+  --accent-foreground: var(--slate-900);
+  --destructive: var(--coral-700);
+  --border: var(--paper-200);
+  --border-strong: var(--paper-300);
+  --input: var(--paper-200);
+  --ring: var(--cyan-700);
+
+  --signal: var(--amber-400);
+  --signal-text: var(--amber-700);
+  --data: var(--cyan-700);
+  --data-soft: color-mix(in oklab, var(--cyan-700) 14%, transparent);
+  --line: color-mix(in oklab, var(--ink-500) 70%, transparent);
+  --line-faint: color-mix(in oklab, var(--ink-500) 28%, transparent);
+  --grid-minor: color-mix(in oklab, var(--ink-600) 7%, transparent);
+  --grid-major: color-mix(in oklab, var(--ink-600) 12%, transparent);
+  --glow-data: color-mix(in oklab, var(--cyan-500) 10%, transparent);
+  --glow-signal: color-mix(in oklab, var(--amber-400) 12%, transparent);
+  --pass: var(--mint-700);
+  --block: var(--coral-700);
+  --noise-opacity: 0.05;
+  --shadow-card: 0 1px 0 color-mix(in oklab, var(--ink-950) 4%, transparent),
+    0 12px 32px -18px color-mix(in oklab, var(--ink-950) 22%, transparent);
+
+  --chart-1: var(--cyan-700);
+  --chart-2: var(--amber-500);
+  --chart-3: var(--ink-500);
+  --chart-4: var(--mint-700);
+  --chart-5: var(--coral-700);
+  --radius: var(--radius-m);
+}
+
+/* ============================================================
+   LAYER 2: SEMANTIC, dark theme ("blueprint ink"), default
+   ============================================================ */
+.dark {
+  --background: var(--ink-950);
+  --foreground: var(--ink-100);
+  --card: color-mix(in oklab, var(--ink-850) 78%, transparent);
+  --card-solid: var(--ink-850);
+  --card-foreground: var(--ink-100);
+  --popover: var(--ink-850);
+  --popover-foreground: var(--ink-100);
+  --primary: var(--amber-400);
+  --primary-foreground: var(--ink-975);
+  --secondary: var(--ink-800);
+  --secondary-foreground: var(--ink-100);
+  --muted: var(--ink-800);
+  --muted-foreground: var(--ink-300);
+  --accent: var(--ink-750);
+  --accent-foreground: var(--ink-100);
+  --destructive: var(--coral-400);
+  --border: color-mix(in oklab, var(--ink-500) 34%, transparent);
+  --border-strong: color-mix(in oklab, var(--ink-400) 50%, transparent);
+  --input: var(--ink-700);
+  --ring: var(--cyan-400);
+
+  --signal: var(--amber-400);
+  --signal-text: var(--amber-300);
+  --data: var(--cyan-400);
+  --data-soft: color-mix(in oklab, var(--cyan-400) 12%, transparent);
+  --line: color-mix(in oklab, var(--ink-400) 80%, transparent);
+  --line-faint: color-mix(in oklab, var(--ink-400) 30%, transparent);
+  --grid-minor: color-mix(in oklab, var(--ink-400) 8%, transparent);
+  --grid-major: color-mix(in oklab, var(--ink-400) 14%, transparent);
+  --glow-data: color-mix(in oklab, var(--cyan-500) 13%, transparent);
+  --glow-signal: color-mix(in oklab, var(--amber-500) 8%, transparent);
+  --pass: var(--mint-400);
+  --block: var(--coral-400);
+  --noise-opacity: 0.06;
+  --shadow-card: 0 1px 0 color-mix(in oklab, var(--ink-100) 4%, transparent) inset,
+    0 18px 40px -24px color-mix(in oklab, black 70%, transparent);
+
+  --chart-1: var(--cyan-400);
+  --chart-2: var(--amber-400);
+  --chart-3: var(--ink-400);
+  --chart-4: var(--mint-400);
+  --chart-5: var(--coral-400);
+}
+
+/* ============================================================
+   LAYER 3: COMPONENT TOKENS (reference the semantic layer only)
+   ============================================================ */
+:root {
+  --nav-height: 64px;
+  --nav-bg: color-mix(in oklab, var(--background) 74%, transparent);
+  --nav-border: var(--border);
+
+  --panel-bg: var(--card);
+  --panel-border: var(--border);
+  --panel-radius: var(--radius-m);
+  --panel-shadow: var(--shadow-card);
+
+  --button-radius: var(--radius-s);
+  --tag-radius: var(--radius-xs);
+  --tag-bg: color-mix(in oklab, var(--foreground) 5%, transparent);
+  --tag-border: var(--border);
+
+  --frame-mark: var(--line);
+  --frame-mark-size: 12px;
+
+  --diagram-stroke: var(--line);
+  --diagram-stroke-faint: var(--line-faint);
+  --diagram-node-bg: var(--card-solid);
+  --diagram-flow: var(--data);
+  --diagram-signal: var(--signal-text);
+  --diagram-pass: var(--pass);
+  --diagram-block: var(--block);
+  --diagram-text: var(--muted-foreground);
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-body);
-  --font-heading: var(--font-heading);
-  --font-mono: var(--font-mono);
-  --color-data: var(--data);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-6: var(--chart-6);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+  --color-card-solid: var(--card-solid);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-signal: var(--signal);
+  --color-signal-text: var(--signal-text);
+  --color-data: var(--data);
+  --color-data-soft: var(--data-soft);
+  --color-line: var(--line);
+  --color-line-faint: var(--line-faint);
+  --color-pass: var(--pass);
+  --color-block: var(--block);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+
+  --radius-sm: var(--radius-xs);
+  --radius-md: var(--radius-s);
+  --radius-lg: var(--radius-m);
+  --radius-xl: 14px;
+  --radius-2xl: var(--radius-l);
+
+  --ease-out-expo: var(--ease-out);
+  --ease-in-out-quint: var(--ease-in-out);
+
+  --animate-rise: rise var(--dur-long) var(--ease-out) both;
+  --animate-fade: fade-in var(--dur-long) var(--ease-out) both;
+  --animate-pulse-dot: pulse-dot 2.4s var(--ease-in-out) infinite;
 }
 
-:root {
-  --background: #F5F1EC;
-  --foreground: #0F172A;
-  --card: #FFFFFF;
-  --card-foreground: #0F172A;
-  --popover: #FFFFFF;
-  --popover-foreground: #0F172A;
-  --primary: #2563EB;
-  --primary-foreground: #FFFFFF;
-  --secondary: #EFE8E0;
-  --secondary-foreground: #0F172A;
-  --muted: #ECE3D9;
-  --muted-foreground: #57534E;
-  --accent: #EFF4FF;
-  --accent-foreground: #1D4ED8;
-  --destructive: #DC2626;
-  --border: #E4DBD0;
-  --input: #E4DBD0;
-  --ring: #2563EB;
-  --data: #0D9488;
-  --chart-1: #2563EB;
-  --chart-2: #0D9488;
-  --chart-3: #D97706;
-  --chart-4: #7C3AED;
-  --chart-5: #E11D48;
-  --chart-6: #0891B2;
-  --radius: 0.75rem;
-  --sidebar: #FFFFFF;
-  --sidebar-foreground: #0F172A;
-  --sidebar-primary: #2563EB;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #EFF4FF;
-  --sidebar-accent-foreground: #1D4ED8;
-  --sidebar-border: #E2E8F0;
-  --sidebar-ring: #2563EB;
-}
-
-.dark {
-  --background: #0B1220;
-  --foreground: #E2E8F0;
-  --card: #111827;
-  --card-foreground: #E2E8F0;
-  --popover: #111827;
-  --popover-foreground: #E2E8F0;
-  --primary: #3B82F6;
-  --primary-foreground: #0B1220;
-  --secondary: #151E30;
-  --secondary-foreground: #E2E8F0;
-  --muted: #151E30;
-  --muted-foreground: #94A3B8;
-  --accent: #16233E;
-  --accent-foreground: #93C5FD;
-  --destructive: #F87171;
-  --border: #1F2A3D;
-  --input: #1F2A3D;
-  --ring: #60A5FA;
-  --data: #3FD0BD;
-  --chart-1: #3B82F6;
-  --chart-2: #3FD0BD;
-  --chart-3: #F0B457;
-  --chart-4: #A78BFA;
-  --chart-5: #FB7185;
-  --chart-6: #22D3EE;
-  --sidebar: #111827;
-  --sidebar-foreground: #E2E8F0;
-  --sidebar-primary: #3B82F6;
-  --sidebar-primary-foreground: #0B1220;
-  --sidebar-accent: #16233E;
-  --sidebar-accent-foreground: #93C5FD;
-  --sidebar-border: #1F2A3D;
-  --sidebar-ring: #60A5FA;
-}
-
+/* ============================================================
+   BASE
+   ============================================================ */
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--nav-height) + 16px);
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
   body {
     @apply bg-background text-foreground;
+    font-size: 1rem;
+    line-height: 1.65;
+    min-height: 100dvh;
   }
-  html {
-    @apply font-sans scroll-smooth;
+  ::selection {
+    background: color-mix(in oklab, var(--signal) 40%, transparent);
+    color: var(--foreground);
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  img {
+    -webkit-user-drag: none;
   }
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
     }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+@utility font-display {
+  font-family: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  font-stretch: 116%;
+  font-variation-settings: "wdth" 116;
+  letter-spacing: -0.02em;
+}
+
+@utility font-display-wide {
+  font-family: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  font-stretch: 125%;
+  font-variation-settings: "wdth" 125;
+  letter-spacing: -0.03em;
+}
+
+@utility mono-label {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  line-height: 1.3;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@utility bp-grid {
+  background-image:
+    linear-gradient(var(--grid-major) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(var(--grid-minor) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px);
+  background-size:
+    var(--grid-major-size) var(--grid-major-size),
+    var(--grid-major-size) var(--grid-major-size),
+    var(--grid-minor-size) var(--grid-minor-size),
+    var(--grid-minor-size) var(--grid-minor-size);
+  background-position: -1px -1px;
+}
+
+@utility panel {
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--panel-radius);
+  box-shadow: var(--panel-shadow);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+@utility link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size var(--dur-short) var(--ease-out);
+  &:hover,
+  &:focus-visible {
+    background-size: 100% 1px;
+  }
+}
+
+/* ============================================================
+   KEYFRAMES
+   ============================================================ */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--pass) 55%, transparent);
+  }
+  60% {
+    box-shadow: 0 0 0 6px color-mix(in oklab, var(--pass) 0%, transparent);
+  }
+}
+
+@keyframes caret {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes scroll-cue {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(260%);
+  }
+}
+
+/* A thin data line sweeps once over a project cover on hover, like an inspection pass. */
+@keyframes scan {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+/* ============================================================
+   VIEW TRANSITIONS (React <ViewTransition>, Next.js 16)
+   Forward: content slides left. Back: content slides right.
+   Shared project cover morphs from card to case study hero.
+   ============================================================ */
+::view-transition {
+  pointer-events: none;
+}
+
+::view-transition-group(site-header) {
+  animation: none;
+  z-index: 100;
+}
+::view-transition-old(site-header) {
+  display: none;
+}
+::view-transition-new(site-header) {
+  animation: none;
+}
+
+::view-transition-group(.morph) {
+  animation-duration: 520ms;
+  animation-timing-function: var(--ease-in-out);
+}
+::view-transition-image-pair(.morph) {
+  animation-name: via-blur;
+}
+
+::view-transition-old(.nav-forward) {
+  --slide-offset: -48px;
+  animation:
+    160ms var(--ease-in) both vt-fade reverse,
+    420ms var(--ease-in-out) both vt-slide reverse;
+}
+::view-transition-new(.nav-forward) {
+  --slide-offset: 48px;
+  animation:
+    260ms var(--ease-out) 140ms both vt-fade,
+    420ms var(--ease-in-out) both vt-slide;
+}
+::view-transition-old(.nav-back) {
+  --slide-offset: 48px;
+  animation:
+    160ms var(--ease-in) both vt-fade reverse,
+    420ms var(--ease-in-out) both vt-slide reverse;
+}
+::view-transition-new(.nav-back) {
+  --slide-offset: -48px;
+  animation:
+    260ms var(--ease-out) 140ms both vt-fade,
+    420ms var(--ease-in-out) both vt-slide;
+}
+
+@keyframes vt-fade {
+  from {
+    opacity: 0;
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+@keyframes vt-slide {
+  from {
+    translate: var(--slide-offset) 0;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+@keyframes via-blur {
+  35% {
+    filter: blur(3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
   }
 }

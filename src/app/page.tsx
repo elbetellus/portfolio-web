@@ -1,27 +1,28 @@
-import { SiteHeader } from "@/components/site-header";
-import { HeroSection } from "@/components/hero-section";
-import { AboutSection } from "@/components/about-section";
-import { SkillsSection } from "@/components/skills-section";
-import { EducationSection } from "@/components/education-section";
-import { ExperienceSection } from "@/components/experience-section";
-import { ProjectsSection } from "@/components/projects-section";
-import { CertificatesSection } from "@/components/certificates-section";
-import { ContactSection } from "@/components/contact-section";
+import { ViewTransition } from "react";
+import { Hero } from "@/components/site/hero";
+import { AboutSection } from "@/components/site/about-section";
+import { WorkSection } from "@/components/site/work-section";
+import { ExperienceSection } from "@/components/site/experience-section";
+import { EducationSection } from "@/components/site/education-section";
+import { SkillsSection } from "@/components/site/skills-section";
+import { CredentialsSection } from "@/components/site/credentials-section";
+import { ContactSection } from "@/components/site/contact-section";
+
+const directional = { "nav-forward": "nav-forward", "nav-back": "nav-back", default: "none" };
 
 export default function Home() {
   return (
-    <>
-      <SiteHeader />
-      <main id="main-content" className="flex-1">
-        <HeroSection />
+    <ViewTransition enter={directional} exit={directional} default="none">
+      <div>
+        <Hero />
         <AboutSection />
-        <SkillsSection />
-        <EducationSection />
+        <WorkSection />
         <ExperienceSection />
-        <ProjectsSection />
-        <CertificatesSection />
+        <EducationSection />
+        <SkillsSection />
+        <CredentialsSection />
         <ContactSection />
-      </main>
-    </>
+      </div>
+    </ViewTransition>
   );
 }
