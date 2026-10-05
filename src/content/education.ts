@@ -19,6 +19,12 @@ export const education = {
       "Enterprise Business Process",
       "IS Project Management",
     ],
+    research: {
+      title: "Factor Influencing Tourists Intention to Use Mobile Augmented Reality in Tourism",
+      meta: "First author · RMIS course final paper, supervised by Dr. Anderes Gui · 2026",
+      summary:
+        "Tested an extended UTAUT2 model of what drives Indonesian tourists to use digital tourism apps. 451 survey responses, analyzed with PLS-SEM in SmartPLS 4. 13 of 17 hypotheses were supported, and Habit was the strongest predictor of intention.",
+    },
     photo: {
       src: "/images/binus-campus.webp",
       width: 1200,

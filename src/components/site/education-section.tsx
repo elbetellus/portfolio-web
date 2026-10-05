@@ -118,6 +118,15 @@ export function EducationSection() {
                 ))}
               </ul>
             </div>
+
+            <div className="mt-8 border-t border-border pt-7">
+              <p className="mono-label text-[0.6875rem] text-muted-foreground">Research paper</p>
+              <p className="font-display mt-3 text-lg leading-snug font-semibold text-balance">{e.research.title}</p>
+              <p className="mono-label mt-2 text-[0.6875rem] text-signal-text">{e.research.meta}</p>
+              <p className="mt-3 max-w-prose text-[0.975rem] leading-relaxed text-muted-foreground">
+                {e.research.summary}
+              </p>
+            </div>
           </div>
         </Reveal>
 
