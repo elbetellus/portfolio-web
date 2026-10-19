@@ -63,6 +63,7 @@ const generic: Record<string, LucideIcon> = {
   DAX: Sigma,
   "Power BI": ChartColumn,
   Tableau: ChartNoAxesCombined,
+  "Looker Studio": ChartColumn,
   SQL: Database,
   "Oracle PL/SQL": Database,
   "Oracle APEX": Server,

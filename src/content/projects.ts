@@ -305,8 +305,83 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "care-engine",
+    slug: "smart-data-analytics",
     code: "P-04",
+    title: "Growth vs Welfare Dashboard, Smart Data Analytics 2026",
+    kind: "Data analytics competition",
+    year: "2026",
+    period: "Oct 2026",
+    role: "Data preparation and dashboard",
+    team: "Team entry. I prepared the data and built the dashboard",
+    stack: ["Looker Studio", "Python", "BPS", "DJPK Kemenkeu"],
+    status: { label: "Submitted", tone: "neutral" },
+    cardSummary:
+      "Does strong economic growth reach people? A Looker Studio dashboard on poverty, inequality, and regional budgets across 34 provinces.",
+    cardMetric: { value: "34", label: "provinces, 2021 to 2025" },
+    summary:
+      "An entry for the Smart Data Analytics 2026 competition. The question was whether strong economic growth translates into better welfare across Indonesian provinces. I combined official statistics from BPS and regional budget data from the Ministry of Finance (DJPK) into one province-by-year dataset, and built an interactive Looker Studio dashboard on top of it. The dashboard text is in Indonesian.",
+    cover: {
+      src: "/projects/smart-data-analytics/dashboard.webp",
+      width: 2000,
+      height: 1765,
+      alt: "Looker Studio dashboard with KPI cards, a Gini trend, a map, and a scatter plot",
+    },
+    links: [
+      {
+        label: "Open the dashboard",
+        href: "https://datastudio.google.com/reporting/a095a53f-3bd2-4fac-992f-520c8839c260",
+        note: "Interactive Looker Studio report",
+        kind: "live",
+      },
+    ],
+    problem: [
+      "Growth, poverty, inequality, and spending sit in separate official tables, each with its own layout, province spelling, and release schedule.",
+      "A headline growth number says little about whether poorer provinces, or the budgets that serve them, are keeping up.",
+    ],
+    built: {
+      heading: "What I did",
+      items: [
+        "Combined six BPS tables (GDP growth, GDP per capita, poverty, unemployment, Gini ratio, population) with DJPK regional budget files into one dataset keyed by province and year, 2021 to 2025.",
+        "Cleaned the sources before any chart existed: one standard province name across sources, wide DJPK budget files reshaped to long format, units made consistent, and old account codes mapped to new ones.",
+        "Handled the Papua split instead of hiding it. Four new provinces have no data before 2023, and Papua and Papua Barat change boundaries along the way, so I added a boundary-status column and used it to keep non-comparable rows out of the per-person ratios.",
+        "Checked the budget data against itself: total spending from two separate DJPK files matched at a ratio of 1.000 in 2021, 2022, 2023, and 2025. In 2024 it was 1.012, because one file covers 545 local governments and the other 536.",
+        "Wrote each ratio as a calculated field over raw sums, for example own-source revenue (PAD) as a share of total revenue, so it stays correct under any combination of year, region, and province filters.",
+        "Designed the dashboard around one question per chart: four KPI cards, a Gini trend by island group, capital versus non-capital spending per person, a map of GDP growth, a fiscal self-reliance segmentation, and GDP per capita against poverty. Year, region, and province filters apply to everything.",
+      ],
+    },
+    results: [
+      { value: "34", label: "Provinces compared" },
+      { value: "5", label: "Years covered, 2021 to 2025" },
+      { value: "5", label: "Charts and a map, plus 4 KPI cards" },
+      { value: "3", label: "Filters: year, region, province" },
+    ],
+    resultNotes: [
+      "The fiscal segmentation splits the 34 provinces into 12 Mandiri (self-reliant), 11 Berkembang (developing), and 11 Rentan (vulnerable), based on the share of own-source revenue in total regional revenue.",
+    ],
+    learned: {
+      title: "A per-person ratio is only as good as its denominator",
+      body: "Spending per person looks simple, but for Papua and Papua Barat in 2023 the boundaries differ between sources, so the ratio is not valid for those rows. I wrote the rule next to the formula in the data dictionary, added a boundary-status column, and filtered those rows out of the per-person chart in the dashboard. A clean-looking bar can hide a mismatch that only the documentation reveals.",
+    },
+    limits: [
+      "A competition entry, not a ranked result.",
+      "Team project: my part was the dataset and the dashboard.",
+      "Public statistics only. GDP per capita for 2024 is provisional and 2025 is very provisional, and 2025 budget figures are budgets, not realizations.",
+      "The GDP per capita and poverty scatter plot shows an association between provinces, not a cause.",
+    ],
+    gallery: [
+      {
+        src: "/projects/smart-data-analytics/dashboard.webp",
+        width: 2000,
+        height: 1765,
+        alt: "Full Looker Studio dashboard",
+        caption:
+          "Full dashboard (in Indonesian): KPI cards, Gini trend by island group, capital versus non-capital spending per person, GDP growth map, fiscal self-reliance segmentation, and GDP per capita against poverty.",
+      },
+    ],
+  },
+  {
+    slug: "care-engine",
+    code: "P-05",
     title: "CARE Engine, B-Startion 2026",
     kind: "Business case competition",
     year: "2026",
@@ -384,7 +459,7 @@ export const projects: Project[] = [
   },
   {
     slug: "nusantaratrip",
-    code: "P-05",
+    code: "P-06",
     title: "NusantaraTrip",
     kind: "High-fidelity prototype",
     period: "Programming for Business course",

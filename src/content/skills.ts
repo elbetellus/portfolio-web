@@ -11,7 +11,7 @@ export const skillGroups: SkillGroup[] = [
     code: "S-01",
     title: "Data analysis and visualization",
     detail: "Building KPI dashboards and exploratory reports.",
-    tools: ["Excel", "Power Query", "Power Pivot", "DAX", "Power BI", "Tableau"],
+    tools: ["Excel", "Power Query", "Power Pivot", "DAX", "Power BI", "Tableau", "Looker Studio"],
   },
   {
     code: "S-02",
