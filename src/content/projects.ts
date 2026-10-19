@@ -343,7 +343,7 @@ export const projects: Project[] = [
       items: [
         "Combined six BPS tables (GDP growth, GDP per capita, poverty, unemployment, Gini ratio, population) with DJPK regional budget files into one dataset keyed by province and year, 2021 to 2025.",
         "Cleaned the sources before any chart existed: one standard province name across sources, wide DJPK budget files reshaped to long format, units made consistent, and old account codes mapped to new ones.",
-        "Handled the Papua split instead of hiding it. Four new provinces have no data before 2023, and Papua and Papua Barat change boundaries along the way, so I added a boundary-status column and used it to keep non-comparable rows out of the per-person ratios.",
+        "Handled the Papua split instead of hiding it. Four provinces created in 2022 have no data before 2023, so I merged them back into their parent provinces to keep 34 comparable provinces across all five years. Population and budgets are summed; poverty, GDP per capita, unemployment, and Gini are averaged weighted by population; GDP growth is weighted by nominal GDP share.",
         "Checked the budget data against itself: total spending from two separate DJPK files matched at a ratio of 1.000 in 2021, 2022, 2023, and 2025. In 2024 it was 1.012, because one file covers 545 local governments and the other 536.",
         "Wrote each ratio as a calculated field over raw sums, for example own-source revenue (PAD) as a share of total revenue, so it stays correct under any combination of year, region, and province filters.",
         "Designed the dashboard around one question per chart: four KPI cards, a Gini trend by island group, capital versus non-capital spending per person, a map of GDP growth, a fiscal self-reliance segmentation, and GDP per capita against poverty. Year, region, and province filters apply to everything.",
@@ -359,13 +359,14 @@ export const projects: Project[] = [
       "The fiscal segmentation splits the 34 provinces into 12 Mandiri (self-reliant), 11 Berkembang (developing), and 11 Rentan (vulnerable), based on the share of own-source revenue in total regional revenue.",
     ],
     learned: {
-      title: "A per-person ratio is only as good as its denominator",
-      body: "Spending per person looks simple, but for Papua and Papua Barat in 2023 the boundaries differ between sources, so the ratio is not valid for those rows. I wrote the rule next to the formula in the data dictionary, added a boundary-status column, and filtered those rows out of the per-person chart in the dashboard. A clean-looking bar can hide a mismatch that only the documentation reveals.",
+      title: "A falling number is not always an improvement",
+      body: "Papua's poverty rate drops from 26.86% in 2021 to 17.26% in 2024, but mostly because the poorest areas were split off into new provinces, not because things got better. Dropping the new provinces would have removed the poorest regions from the comparison, so I merged them into their parents instead. That costs some precision, which is why the merged figures are estimates.",
     },
     limits: [
       "A competition entry, not a ranked result.",
       "Team project: my part was the dataset and the dashboard.",
       "Public statistics only. GDP per capita for 2024 is provisional and 2025 is very provisional, and 2025 budget figures are budgets, not realizations.",
+      "Gini and GDP growth for Papua and Papua Barat in 2023 to 2025 are estimates from the merge, not official figures.",
       "The GDP per capita and poverty scatter plot shows an association between provinces, not a cause.",
     ],
     gallery: [
